@@ -8,8 +8,8 @@ import 'package:test_packegs/core/user_session/user_session_bloc.dart';
 import 'package:test_packegs/models/Loginmodel.dart';
 import 'package:test_packegs/view/signup_view.dart';
 
-TextEditingController email = TextEditingController(text: "emilys");
-TextEditingController password = TextEditingController(text: "emilyspass");
+TextEditingController email = TextEditingController();
+TextEditingController password = TextEditingController();
 bool visibility_password = true;
 
 class LoginView extends StatefulWidget {
@@ -171,7 +171,7 @@ class _LoginViewState extends State<LoginView> {
                   );
                 },
               ),
-              SizedBox(height: 140.h),
+              SizedBox(height: 100.h),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

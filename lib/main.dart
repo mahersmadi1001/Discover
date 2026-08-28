@@ -30,8 +30,6 @@ void main() async {
   Hive.registerAdapter<ProductModel>(ProductModelAdapter());
   await setup();
   runApp(const MyApp());
-  // await Hive.deleteBoxFromDisk("favorite_key");
-  // await Hive.deleteBoxFromDisk("shopping_cart");
 }
 
 class MyApp extends StatefulWidget {

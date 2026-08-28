@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -10,9 +9,6 @@ class UserSessionService {
   UserSessionService({required this.sharedPreferences});
 
   bool isFirstTimeOpen() {
-    print(
-      "${sharedPreferences.getBool(_firstTimeOpenKey)}       _firstTimeOpenKey  قيمة  ",
-    );
     return sharedPreferences.getBool(_firstTimeOpenKey) ?? true;
   }
 
@@ -21,16 +17,15 @@ class UserSessionService {
     return hasToken;
   }
 
-  Future<void> completeOnboarding() async {
-    print("completeOnboarding fun");
+  Future<void> completeOnboarding() async { 
     await sharedPreferences.setBool(_firstTimeOpenKey, false);
   }
-
+ 
   Future<void> saveToken({required String? token}) async {
     await storage.write(key: _token, value: token!);
   }
 
   void clearToken() {
-    sharedPreferences.remove(_token);
+    storage.delete(key: _token);
   }
 }

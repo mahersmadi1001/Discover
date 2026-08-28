@@ -4,17 +4,21 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:test_packegs/models/Loginmodel.dart';
 import 'package:test_packegs/models/signup_model.dart';
 import 'package:test_packegs/services/di.dart';
+import 'package:test_packegs/services/user_session_service.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
-
+  final UserSessionService userSessionService = UserSessionService(
+    sharedPreferences: getIt.get<SharedPreferences>(),
+  );
   Future<bool> login({required LoginModel loginModel}) async {
     try {
       await _auth.signInWithEmailAndPassword(
         email: loginModel.username,
         password: loginModel.password,
       );
+      
       return true;
     } catch (e) {
       print('Login error: $e');
@@ -24,7 +28,7 @@ class AuthService {
 
   Future<bool> signup({required SignupModel signupModel}) async {
     try {
-      await _auth.createUserWithEmailAndPassword( 
+      await _auth.createUserWithEmailAndPassword(
         email: signupModel.email,
         password: signupModel.password,
       );
@@ -46,6 +50,7 @@ class AuthService {
 
       final GoogleSignInAuthentication googleAuth =
           await googleUser.authentication;
+
       final credential = GoogleAuthProvider.credential(
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,

@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:test_packegs/core/user_session/user_session_bloc.dart';
-import 'package:test_packegs/services/di.dart';
 
 class OnboardingView extends StatelessWidget {
   const OnboardingView({super.key});
@@ -59,9 +57,7 @@ class OnboardingView extends StatelessWidget {
               ),
               onPressed: () {
                 context.read<UserSessionBloc>().add(CompleteOnboarding());
-                print(
-                  "${getIt.get<SharedPreferences>().getBool("first_time")}      first_timeقيمة ",
-                );
+               
               },
               color: Colors.black,
               minWidth: 341.w,
