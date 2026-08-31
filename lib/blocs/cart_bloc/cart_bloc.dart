@@ -1,8 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:test_packegs/models/cart_item_model.dart' show CartItemModel;
-import 'package:test_packegs/services/cart_local_data_source.dart';
+import 'package:Discover/models/cart_item_model.dart' show CartItemModel;
+import 'package:Discover/services/cart_local_data_source.dart';
 
 part 'cart_event.dart';
 part 'cart_state.dart';

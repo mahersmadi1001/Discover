@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:meta/meta.dart';
-import 'package:test_packegs/models/product_model.dart';
+import 'package:Discover/models/product_model.dart';
 
 part 'favorite_event.dart';
 part 'favorite_state.dart';

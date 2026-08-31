@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'package:test_packegs/blocs/local_search_product_bloc/local_search_product_bloc.dart';
-import 'package:test_packegs/view/details_view.dart';
+import 'package:Discover/blocs/local_search_product_bloc/local_search_product_bloc.dart';
+import 'package:Discover/view/details_view.dart';
 
 class SearchView extends StatefulWidget {
   final String initialQuery;
@@ -112,27 +112,29 @@ class Haserror extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SizedBox(height: 150.h),
-        Icon(Icons.search, size: 100.sp, color: Color(0xffB3B3B3)),
-        Text(
-          'No Results Found!',
-          style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20.sp),
-        ),
-        SizedBox(
-          width: 252.w,
-          child: Text(
-            'Try a similar word or something more general.',
-            style: TextStyle(
-              color: Color(0xff808080),
-              fontSize: 16.sp,
-              fontWeight: FontWeight.w400,
-            ),
-            textAlign: TextAlign.center,
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          SizedBox(height: 150.h),
+          Icon(Icons.search, size: 100.sp, color: Color(0xffB3B3B3)),
+          Text(
+            'No Results Found!',
+            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20.sp),
           ),
-        ),
-      ],
+          SizedBox(
+            width: 252.w,
+            child: Text(
+              'Try a similar word or something more general.',
+              style: TextStyle(
+                color: Color(0xff808080),
+                fontSize: 16.sp,
+                fontWeight: FontWeight.w400,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

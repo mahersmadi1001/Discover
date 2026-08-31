@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
-import 'package:test_packegs/core/constants/api_constants.dart';
-import 'package:test_packegs/models/category_model.dart';
-import 'package:test_packegs/models/product_model.dart';
+import 'package:Discover/core/constants/api_constants.dart';
+import 'package:Discover/models/category_model.dart';
+import 'package:Discover/models/product_model.dart';
 
 class ProductService {
   Future<List<ProductModel>?> getAllProducts({required int skip}) async {

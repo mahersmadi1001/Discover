@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:test_packegs/blocs/category_bloc/category_bloc.dart';
-import 'package:test_packegs/blocs/product_bloc/product_bloc.dart';
+import 'package:Discover/blocs/category_bloc/category_bloc.dart';
+import 'package:Discover/blocs/product_bloc/product_bloc.dart';
 
 class CategoryChipWidget extends StatelessWidget {
   const CategoryChipWidget({super.key});

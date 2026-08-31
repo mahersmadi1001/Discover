@@ -1,19 +1,34 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:async';
 import 'package:bloc/bloc.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:meta/meta.dart';
-import 'package:test_packegs/services/user_session_service.dart';
+import 'package:Discover/services/authservice.dart';
+import 'package:Discover/services/user_session_service.dart';
 part 'user_session_event.dart';
 part 'user_session_state.dart';
 
 class UserSessionBloc extends Bloc<UserSessionEvent, UserSessionState> {
   UserSessionService userSessionService;
+  AuthService authService = AuthService();
+  final FirebaseAuth _fireBaseAuth = FirebaseAuth.instance;
+  StreamSubscription<User?>? _authSubscription;
+  // bool _isProcessingSignOut = false;
+
   UserSessionBloc(this.userSessionService) : super(UserSessionInitial()) {
+    // _authSubscription = _fireBaseAuth.authStateChanges().listen((User? user) {
+    //   if (user == null && !_isProcessingSignOut) {
+    //     add(Signout());
+    //   } else if (user != null) {
+    //     add(LogingUser());
+    //   } 
+    // });
+
     on<UserSessionCheckStatus>((event, emit) async {
       await Future.delayed(Duration(seconds: 3));
       if (userSessionService.isFirstTimeOpen()) {
         emit(UserFirstTimeState());
       } else {
-        if (userSessionService.isAuthenticated()) {
+        if (_fireBaseAuth.currentUser != null) {
           emit(UserAuthenticated());
         } else {
           emit(UserUnAuth());
@@ -30,9 +45,18 @@ class UserSessionBloc extends Bloc<UserSessionEvent, UserSessionState> {
       emit(UserUnAuth());
     });
 
-    on<Signout>((event, emit) {
-      userSessionService.clearToken();
+    on<Signout>((event, emit) async {
+      // _isProcessingSignOut = true;
+
+      await authService.signout();
       emit(UserUnAuth());
+      // _isProcessingSignOut = false;
     });
+  }
+
+  @override
+  Future<void> close() {
+    _authSubscription?.cancel();
+    return super.close();
   }
 }

@@ -5,10 +5,12 @@ class Loginwith extends StatelessWidget {
   Loginwith({
     super.key,
     required this.path,
+    required this.text,
     this.color,
     required this.textcolor,
     required this.onPressed,
   });
+  String text;
   String path;
   Color? color;
   Color? textcolor;
@@ -30,7 +32,7 @@ class Loginwith extends StatelessWidget {
           Image.asset(path, width: 24.w, height: 24.h),
           SizedBox(width: 9.w),
           Text(
-            "Login with Google",
+            text,
             style: TextStyle(fontSize: 16.sp, color: textcolor),
           ),
         ],

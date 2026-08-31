@@ -1,11 +1,8 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:bloc/bloc.dart';
-
 import 'package:meta/meta.dart';
-import 'package:test_packegs/models/Loginmodel.dart';
-import 'package:test_packegs/models/signup_model.dart';
-import 'package:test_packegs/services/authservice.dart';
-
+import 'package:Discover/models/Loginmodel.dart';
+import 'package:Discover/models/signup_model.dart';
+import 'package:Discover/services/authservice.dart';
 part 'auth_event.dart';
 part 'auth_state.dart';
 

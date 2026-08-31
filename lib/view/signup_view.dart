@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:test_packegs/blocs/Loginbloc/auth_bloc/auth_bloc.dart';
-import 'package:test_packegs/core/Widgets/tfflogin.dart';
-import 'package:test_packegs/core/user_session/user_session_bloc.dart';
-import 'package:test_packegs/models/signup_model.dart';
+import 'package:Discover/blocs/Loginbloc/auth_bloc/auth_bloc.dart';
+import 'package:Discover/core/Widgets/tfflogin.dart';
+import 'package:Discover/core/user_session/user_session_bloc.dart';
+import 'package:Discover/models/signup_model.dart';
 
-TextEditingController signupEmail = TextEditingController();
-TextEditingController signupPassword = TextEditingController();
-TextEditingController signupName = TextEditingController();
-bool signupVisibilityPassword = true;
+
 
 class SignupView extends StatefulWidget {
   const SignupView({super.key});
@@ -20,6 +17,10 @@ class SignupView extends StatefulWidget {
 
 class _SignupViewState extends State<SignupView> {
   GlobalKey<FormState> signupKey = GlobalKey<FormState>();
+  TextEditingController signupEmail = TextEditingController();
+TextEditingController signupPassword = TextEditingController();
+TextEditingController signupName = TextEditingController();
+bool signupVisibilityPassword = true;
 
   @override
   void dispose() {
@@ -109,17 +110,16 @@ class _SignupViewState extends State<SignupView> {
               SizedBox(height: 16.h),
               Text(
                 "By signing up, you agree to our Terms and Privacy Policy",
-                style: TextStyle(
-                  color: Color(0xff808080),
-                  fontSize: 12.sp,
-                ),
+                style: TextStyle(color: Color(0xff808080), fontSize: 12.sp),
               ),
               SizedBox(height: 32.h),
               BlocConsumer<AuthBloc, AuthState>(
                 listener: (context, state) {
                   if (state is AuthError) {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text(state.errorMessage ?? "Signup failed")),
+                      SnackBar(
+                        content: Text(state.errorMessage ?? "Signup failed"),
+                      ),
                     );
                   } else if (state is AuthSuccess) {
                     context.read<UserSessionBloc>().add(LogingUser());
@@ -160,11 +160,8 @@ class _SignupViewState extends State<SignupView> {
               SizedBox(height: 32.h),
               Row(
                 children: [
-                  SizedBox(
-                    width: 150.w,
-                    child: Expanded(
-                      child: Divider(color: Color(0xffE6E6E6), thickness: 2.sp),
-                    ),
+                  Expanded(
+                    child: Divider(color: Color(0xffE6E6E6), thickness: 2.sp),
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 8.w),
@@ -176,9 +173,8 @@ class _SignupViewState extends State<SignupView> {
                       ),
                     ),
                   ),
-                  SizedBox(
+                  Expanded(
                     child: Divider(color: Color(0xffE6E6E6), thickness: 2.sp),
-                    width: 150.w,
                   ),
                 ],
               ),

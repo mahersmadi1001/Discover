@@ -1,10 +1,9 @@
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserSessionService {
   final String _firstTimeOpenKey = "first_time";
-  final String _token = "token";
-  final storage = const FlutterSecureStorage();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   SharedPreferences sharedPreferences;
   UserSessionService({required this.sharedPreferences});
 
@@ -13,19 +12,13 @@ class UserSessionService {
   }
 
   bool isAuthenticated() {
-    bool hasToken = !(storage.read(key: _token) == null);
-    return hasToken;
+    return _auth.currentUser != null;
   }
 
-  Future<void> completeOnboarding() async { 
+  Future<void> completeOnboarding() async {
     await sharedPreferences.setBool(_firstTimeOpenKey, false);
   }
- 
-  Future<void> saveToken({required String? token}) async {
-    await storage.write(key: _token, value: token!);
-  }
+  
 
-  void clearToken() {
-    storage.delete(key: _token);
-  }
+  
 }

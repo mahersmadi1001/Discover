@@ -1,8 +1,8 @@
 import 'package:bloc/bloc.dart';
 
 import 'package:meta/meta.dart';
-import 'package:test_packegs/models/product_model.dart';
-import 'package:test_packegs/services/product_service.dart';
+import 'package:Discover/models/product_model.dart';
+import 'package:Discover/services/product_service.dart';
 
 part 'local_search_product_event.dart';
 part 'local_search_product_state.dart';

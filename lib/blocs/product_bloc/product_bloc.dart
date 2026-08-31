@@ -1,9 +1,9 @@
 import 'package:bloc/bloc.dart';
 
 import 'package:equatable/equatable.dart';
-import 'package:test_packegs/core/constants/api_constants.dart';
-import 'package:test_packegs/models/product_model.dart';
-import 'package:test_packegs/services/product_service.dart';
+import 'package:Discover/core/constants/api_constants.dart';
+import 'package:Discover/models/product_model.dart';
+import 'package:Discover/services/product_service.dart';
 
 part 'product_event.dart';
 part 'product_state.dart';

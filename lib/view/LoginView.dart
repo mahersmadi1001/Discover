@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:test_packegs/blocs/Loginbloc/auth_bloc/auth_bloc.dart';
-import 'package:test_packegs/core/Widgets/Loginwith.dart';
-import 'package:test_packegs/core/Widgets/tfflogin.dart';
-import 'package:test_packegs/core/user_session/user_session_bloc.dart';
-import 'package:test_packegs/models/Loginmodel.dart';
-import 'package:test_packegs/view/signup_view.dart';
+import 'package:Discover/blocs/Loginbloc/auth_bloc/auth_bloc.dart';
+import 'package:Discover/core/Widgets/Loginwith.dart';
+import 'package:Discover/core/Widgets/tfflogin.dart';
+import 'package:Discover/core/user_session/user_session_bloc.dart';
+import 'package:Discover/models/Loginmodel.dart';
+import 'package:Discover/view/signup_view.dart';
 
 TextEditingController email = TextEditingController();
 TextEditingController password = TextEditingController();
@@ -75,19 +75,8 @@ class _LoginViewState extends State<LoginView> {
                 lapel: "Password",
                 obscureText: visibility_password,
               ),
-              SizedBox(height: 10.h),
-              Text.rich(
-                TextSpan(
-                  children: [
-                    TextSpan(text: "Forgot your password?"),
-                    TextSpan(
-                      text: " Reset your password",
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 24.h),
+
+              SizedBox(height: 50.h),
               BlocConsumer<AuthBloc, AuthState>(
                 listener: (context, state) {
                   if (state is AuthError) {
@@ -112,7 +101,7 @@ class _LoginViewState extends State<LoginView> {
                         context.read<AuthBloc>().add(
                           LoginEvent(
                             loginModel: LoginModel(
-                              username: email.text,
+                              email: email.text,
                               password: password.text,
                             ),
                           ),
@@ -130,11 +119,8 @@ class _LoginViewState extends State<LoginView> {
               SizedBox(height: 34.h),
               Row(
                 children: [
-                  SizedBox(
-                    width: 150.w,
-                    child: Expanded(
-                      child: Divider(color: Color(0xffE6E6E6), thickness: 2.sp),
-                    ),
+                  Expanded(
+                    child: Divider(color: Color(0xffE6E6E6), thickness: 2.sp),
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -146,14 +132,14 @@ class _LoginViewState extends State<LoginView> {
                       ),
                     ),
                   ),
-                  SizedBox(
+                  Expanded(
                     child: Divider(color: Color(0xffE6E6E6), thickness: 2.sp),
-                    width: 150.w,
                   ),
                 ],
               ),
               SizedBox(height: 24.h),
               Loginwith(
+                text: "Login with Google",
                 path: "images/logos_google-icon.png",
                 textcolor: Colors.black,
                 onPressed: () {
@@ -162,6 +148,7 @@ class _LoginViewState extends State<LoginView> {
               ),
               SizedBox(height: 16.h),
               Loginwith(
+                text: "Login with Facebook",
                 path: "images/logos_facebook.png",
                 color: Color(0xff1877F2),
                 textcolor: Colors.white,

@@ -1,4 +1,4 @@
-# test_packegs
+# Discover
 
 A new Flutter project.
 

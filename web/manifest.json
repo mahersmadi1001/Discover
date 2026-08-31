@@ -1,6 +1,6 @@
 {
-    "name": "test_packegs",
-    "short_name": "test_packegs",
+    "name": "Discover",
+    "short_name": "Discover",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

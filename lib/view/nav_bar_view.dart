@@ -2,13 +2,13 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:test_packegs/blocs/favorite_bloc/favorite_bloc.dart';
-import 'package:test_packegs/blocs/product_bloc/product_bloc.dart';
-import 'package:test_packegs/services/product_service.dart';
-import 'package:test_packegs/view/Favoret_item_view.dart';
-import 'package:test_packegs/view/account_view.dart';
-import 'package:test_packegs/view/cart_view.dart';
-import 'package:test_packegs/view/home_view.dart';
+import 'package:Discover/blocs/favorite_bloc/favorite_bloc.dart';
+import 'package:Discover/blocs/product_bloc/product_bloc.dart';
+import 'package:Discover/services/product_service.dart';
+import 'package:Discover/view/Favoret_item_view.dart';
+import 'package:Discover/view/account_view.dart';
+import 'package:Discover/view/cart_view.dart';
+import 'package:Discover/view/home_view.dart';
 
 class NavBarView extends StatefulWidget {
   const NavBarView({super.key});
@@ -99,7 +99,7 @@ class _NavBarViewState extends State<NavBarView> {
                         _buildNavItem(
                           icon: Icons.favorite_outline,
                           selectedIcon: Icons.favorite,
-                          label: 'Saved',
+                          label: 'Favorite',
                           index: 1,
                         ),
                         _buildNavItem(

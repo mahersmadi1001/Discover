@@ -1,27 +1,27 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:test_packegs/blocs/Loginbloc/auth_bloc/auth_bloc.dart';
-import 'package:test_packegs/blocs/cart_bloc/cart_bloc.dart';
-import 'package:test_packegs/blocs/category_bloc/category_bloc.dart';
-import 'package:test_packegs/blocs/local_search_product_bloc/local_search_product_bloc.dart';
-import 'package:test_packegs/blocs/product_bloc/product_bloc.dart';
-import 'package:test_packegs/core/user_session/user_session_bloc.dart';
-import 'package:test_packegs/firebase_options.dart';
-import 'package:test_packegs/models/product_model.dart';
-import 'package:test_packegs/services/authservice.dart';
-import 'package:test_packegs/services/cart_local_data_source.dart';
-import 'package:test_packegs/services/di.dart';
-import 'package:test_packegs/services/product_service.dart';
-import 'package:test_packegs/services/user_session_service.dart';
-import 'package:test_packegs/view/LoginView.dart';
-import 'package:test_packegs/view/nav_bar_view.dart';
-import 'package:test_packegs/view/onboarding_view.dart' show OnboardingView;
-import 'package:test_packegs/view/splash_view.dart';
+import 'package:Discover/blocs/Loginbloc/auth_bloc/auth_bloc.dart';
+import 'package:Discover/blocs/cart_bloc/cart_bloc.dart';
+import 'package:Discover/blocs/category_bloc/category_bloc.dart';
+import 'package:Discover/blocs/local_search_product_bloc/local_search_product_bloc.dart';
+import 'package:Discover/blocs/product_bloc/product_bloc.dart';
+import 'package:Discover/core/user_session/user_session_bloc.dart';
+import 'package:Discover/firebase_options.dart';
+import 'package:Discover/models/product_model.dart';
+import 'package:Discover/services/authservice.dart';
+import 'package:Discover/services/cart_local_data_source.dart';
+import 'package:Discover/services/di.dart';
+import 'package:Discover/services/product_service.dart';
+import 'package:Discover/services/user_session_service.dart';
+import 'package:Discover/view/LoginView.dart';
+import 'package:Discover/view/nav_bar_view.dart';
+import 'package:Discover/view/onboarding_view.dart' show OnboardingView;
+import 'package:Discover/view/splash_view.dart';
 
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
@@ -40,18 +40,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  @override
-  void initState() {
-    FirebaseAuth.instance.userChanges().listen((User? user) {
-      if (user == null) {
-        print('User is currently signed out!');
-      } else {
-        print('User is signed in!');
-      }
-    });
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -85,23 +73,44 @@ class _MyAppState extends State<MyApp> {
         minTextAdapt: true,
         splitScreenMode: true,
         builder: (context, child) {
-          return MaterialApp(
-            debugShowCheckedModeBanner: false,
+          return BlocConsumer<UserSessionBloc, UserSessionState>(
+            listener: (context, state) {
+              if (state is UserAuthenticated) {
+                navigatorKey.currentState?.pushAndRemoveUntil(
+                  MaterialPageRoute(builder: (_) => const NavBarView()),
+                  (route) => false,
+                );
+              } else if (state is UserUnAuth) {
+                navigatorKey.currentState?.pushAndRemoveUntil(
+                  MaterialPageRoute(builder: (_) => LoginView()),
+                  (route) => false,
+                );
+              } else if (state is UserFirstTimeState) {
+                navigatorKey.currentState?.pushAndRemoveUntil(
+                  MaterialPageRoute(builder: (_) => OnboardingView()),
+                  (route) => false,
+                );
+              }
+            },
+            builder: (context, state) {
+              return MaterialApp(
+                theme: ThemeData(
+                  colorScheme: const ColorScheme.light(
+                    primary: Colors.black,
+                    onPrimary: Colors.white,
+                    surface: Colors.white,
+                    onSurface: Colors.black,
+                    secondary: Color(0xFF333333),
+                    onSecondary: Colors.white,
+                  ),
+                ),
 
-            home: BlocBuilder<UserSessionBloc, UserSessionState>(
-              builder: (context, state) {
-                if (state is UserSessionInitial) {
-                  return const SplashView();
-                } else if (state is UserFirstTimeState) {
-                  return const OnboardingView();
-                } else if (state is UserAuthenticated) {
-                  return const NavBarView();
-                } else if (state is UserUnAuth) {
-                  return LoginView();
-                }
-                return const SplashView();
-              },
-            ),
+                navigatorKey: navigatorKey,
+                debugShowCheckedModeBanner: false,
+
+                home: SplashView(),
+              );
+            },
           );
         },
       ),
