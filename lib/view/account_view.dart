@@ -65,7 +65,7 @@ class AccountView extends StatelessWidget {
             onTap: () {},
           ),
           Divider(),
-          // Logout
+   
           ListTile(
             onTap: () {
               showDialog(

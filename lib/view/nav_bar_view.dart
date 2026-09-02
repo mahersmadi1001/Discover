@@ -7,7 +7,7 @@ import 'package:Discover/blocs/product_bloc/product_bloc.dart';
 import 'package:Discover/services/product_service.dart';
 import 'package:Discover/view/Favoret_item_view.dart';
 import 'package:Discover/view/account_view.dart';
-import 'package:Discover/view/cart_view.dart';
+import 'package:Discover/view/cart/cart_view.dart';
 import 'package:Discover/view/home_view.dart';
 
 class NavBarView extends StatefulWidget {
@@ -59,7 +59,7 @@ class _NavBarViewState extends State<NavBarView> {
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
                     colors: [
-                      Colors.white.withOpacity(0.8),
+                      Colors.white.withOpacity(0.9),
                       Colors.white.withOpacity(0.6),
                     ],
                   ),

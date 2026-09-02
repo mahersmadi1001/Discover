@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:Discover/blocs/local_search_product_bloc/local_search_product_bloc.dart';
-import 'package:Discover/view/details_view.dart';
+import 'package:Discover/view/details/details_view.dart';
 
 class SearchView extends StatefulWidget {
   final String initialQuery;

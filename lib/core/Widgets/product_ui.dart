@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:Discover/blocs/favorite_bloc/favorite_bloc.dart';
 import 'package:Discover/models/product_model.dart';
-import 'package:Discover/view/details_view.dart';
+import 'package:Discover/view/details/details_view.dart';
 
 class Product_Ui extends StatelessWidget {
   final String path_image;
