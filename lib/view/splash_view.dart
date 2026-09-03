@@ -16,52 +16,36 @@ class _SplashViewState extends State<SplashView> {
       backgroundColor: const Color(0xff0D0D0D),
       body: Stack(
         children: [
-          Positioned.fill(
-            child: Opacity(
-              opacity: 0.4,
-              child: Image.asset(
-                "images/splash_shape.png",
-                fit: BoxFit.cover,
-              ),
-            ),
-          )
-              .animate()
-              .fadeIn(duration: 1200.ms, curve: Curves.easeOut)
-              .scale(
-                begin: const Offset(1.1, 1.1),
-                end: const Offset(1.0, 1.0),
-                duration: 1600.ms,
-              ),
           SafeArea(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Spacer(),
                 Center(
-                  child: Container(
-                    padding: EdgeInsets.all(28.r),
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.white.withOpacity(0.03),
-                      border: Border.all(
-                        color: Colors.white.withOpacity(0.08),
-                        width: 1.5.w,
-                      ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.5),
-                          blurRadius: 30,
-                          spreadRadius: 5,
+                      child: Container(
+                        padding: EdgeInsets.all(28.r),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.white.withOpacity(0.03),
+                          border: Border.all(
+                            color: Colors.white.withOpacity(0.08),
+                            width: 1.5.w,
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.5),
+                              blurRadius: 30,
+                              spreadRadius: 5,
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                    child: Image.asset(
-                      "images/Vector.png",
-                      width: 110.w,
-                      height: 110.h,
-                    ),
-                  ),
-                )
+                        child: Image.asset(
+                          "images/Vector.png",
+                          width: 110.w,
+                          height: 110.h,
+                        ),
+                      ),
+                    )
                     .animate()
                     .fadeIn(duration: 800.ms, delay: 200.ms)
                     .scale(
@@ -77,29 +61,32 @@ class _SplashViewState extends State<SplashView> {
                     ),
                 SizedBox(height: 24.h),
                 Text(
-                  "D I S C O V E R",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 22.sp,
-                    fontWeight: FontWeight.w700,
-                    letterSpacing: 6.0,
-                  ),
-                )
+                      "D I S C O V E R",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 22.sp,
+                        fontWeight: FontWeight.w700,
+                        letterSpacing: 6.0,
+                      ),
+                    )
                     .animate()
                     .fadeIn(duration: 800.ms, delay: 600.ms)
                     .slideY(begin: 0.3, end: 0, curve: Curves.easeOutQuad),
                 const Spacer(),
                 SizedBox(
-                  width: 28.w,
-                  height: 28.h,
-                  child: const CircularProgressIndicator(
-                    color: Colors.white,
-                    strokeWidth: 2.5,
-                  ),
-                )
+                      width: 28.w,
+                      height: 28.h,
+                      child: const CircularProgressIndicator(
+                        color: Colors.white,
+                        strokeWidth: 2.5,
+                      ),
+                    )
                     .animate()
                     .fadeIn(duration: 600.ms, delay: 900.ms)
-                    .scale(begin: const Offset(0.5, 0.5), end: const Offset(1.0, 1.0)),
+                    .scale(
+                      begin: const Offset(0.5, 0.5),
+                      end: const Offset(1.0, 1.0),
+                    ),
                 SizedBox(height: 48.h),
               ],
             ),

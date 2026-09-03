@@ -77,50 +77,31 @@ class _SignupViewState extends State<SignupView> {
                   ),
                 ),
                 SizedBox(height: 28.h),
-                Text(
-                  "Full Name",
-                  style: TextStyle(
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w600,
-                    color: const Color(0xff222222),
-                  ),
-                ),
+
                 SizedBox(height: 8.h),
-                TFFLogin(
+                CustomTextField(
                   controller: signupName,
                   hint: "Enter your full name",
-                  lapel: "Name",
+                  label: "Full Name",
                   obscureText: false,
                 ),
                 SizedBox(height: 20.h),
-                Text(
-                  "Email Address",
-                  style: TextStyle(
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w600,
-                    color: const Color(0xff222222),
-                  ),
-                ),
+
                 SizedBox(height: 8.h),
-                TFFLogin(
+                CustomTextField(
+                  label: "Email",
                   controller: signupEmail,
                   hint: "Enter your email address",
-                  lapel: "Email",
+
                   obscureText: false,
                 ),
                 SizedBox(height: 20.h),
-                Text(
-                  "Password",
-                  style: TextStyle(
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w600,
-                    color: const Color(0xff222222),
-                  ),
-                ),
+
                 SizedBox(height: 8.h),
-                TFFLogin(
+                CustomTextField(
+                  label: "Password",
                   controller: signupPassword,
-                  iconscure: IconButton(
+                  suffixIcon: IconButton(
                     onPressed: () {
                       setState(() {
                         signupVisibilityPassword = !signupVisibilityPassword;
@@ -135,7 +116,7 @@ class _SignupViewState extends State<SignupView> {
                     ),
                   ),
                   hint: "Create a strong password",
-                  lapel: "Password",
+
                   obscureText: signupVisibilityPassword,
                 ),
                 SizedBox(height: 16.h),

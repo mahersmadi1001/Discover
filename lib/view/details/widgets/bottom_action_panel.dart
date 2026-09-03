@@ -1,7 +1,7 @@
-
 import 'package:Discover/blocs/cart_bloc/cart_bloc.dart';
 import 'package:Discover/models/cart_item_model.dart';
 import 'package:Discover/models/product_model.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -14,11 +14,10 @@ class BottomActionPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 20.h).copyWith(
-        bottom:
-            MediaQuery.of(context).padding.bottom +
-            20.h, 
-      ),
+      padding: EdgeInsets.symmetric(
+        horizontal: 24.w,
+        vertical: 20.h,
+      ).copyWith(bottom: MediaQuery.of(context).padding.bottom + 20.h),
       decoration: BoxDecoration(
         color: Colors.white,
         boxShadow: [
@@ -33,7 +32,6 @@ class BottomActionPanel extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-     
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
@@ -58,13 +56,19 @@ class BottomActionPanel extends StatelessWidget {
             ],
           ),
 
-          
           ElevatedButton.icon(
-            onPressed: () {
+            onPressed: () async {
               context.read<CartBloc>().add(
                 AddToCart(
                   cartItemModel: CartItemModel(product: product, quantity: 1),
                 ),
+              );
+              await FirebaseAnalytics.instance.logViewCart(
+                parameters: {
+                  'product_id': product.id,
+                  'product_name': product.title,
+                  'price': product.price,
+                },
               );
 
               ScaffoldMessenger.of(context).showSnackBar(

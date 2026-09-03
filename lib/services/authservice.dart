@@ -14,10 +14,11 @@ class AuthService {
   );
   Future<bool> login({required LoginModel loginModel}) async {
     try {
-      await _fireBaseAuth.signInWithEmailAndPassword(
-        email: loginModel.email,
-        password: loginModel.password,
-      );
+      final UserCredential userCredential = await _fireBaseAuth
+          .signInWithEmailAndPassword(
+            email: loginModel.email,
+            password: loginModel.password,
+          );
 
       final user = _fireBaseAuth.currentUser;
       if (user != null) {

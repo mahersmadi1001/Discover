@@ -61,34 +61,21 @@ class _LoginViewState extends State<LoginView> {
                   ),
                 ),
                 SizedBox(height: 36.h),
-                Text(
-                  "Email Address",
-                  style: TextStyle(
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w600,
-                    color: const Color(0xff222222),
-                  ),
-                ),
+
                 SizedBox(height: 8.h),
-                TFFLogin(
+                CustomTextField(
                   controller: email,
                   hint: "Enter your email address",
-                  lapel: "Email",
+                  label: "Email",
                   obscureText: false,
                 ),
                 SizedBox(height: 20.h),
-                Text(
-                  "Password",
-                  style: TextStyle(
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w600,
-                    color: const Color(0xff222222),
-                  ),
-                ),
+
                 SizedBox(height: 8.h),
-                TFFLogin(
+                CustomTextField(
+                  label: "Password",
                   controller: password,
-                  iconscure: IconButton(
+                  suffixIcon: IconButton(
                     onPressed: () {
                       setState(() {
                         visibilityPassword = !visibilityPassword;
@@ -103,7 +90,7 @@ class _LoginViewState extends State<LoginView> {
                     ),
                   ),
                   hint: "Enter your password",
-                  lapel: "Password",
+
                   obscureText: visibilityPassword,
                 ),
                 SizedBox(height: 36.h),
@@ -113,7 +100,9 @@ class _LoginViewState extends State<LoginView> {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           backgroundColor: Colors.redAccent,
-                          content: Text(state.errorMessage ?? "An error occurred"),
+                          content: Text(
+                            state.errorMessage ?? "An error occurred",
+                          ),
                         ),
                       );
                     } else if (state is AuthSuccess) {
@@ -146,13 +135,13 @@ class _LoginViewState extends State<LoginView> {
                           onPressed: () {
                             if (loginkey.currentState!.validate()) {
                               context.read<AuthBloc>().add(
-                                    LoginEvent(
-                                      loginModel: LoginModel(
-                                        email: email.text,
-                                        password: password.text,
-                                      ),
-                                    ),
-                                  );
+                                LoginEvent(
+                                  loginModel: LoginModel(
+                                    email: email.text,
+                                    password: password.text,
+                                  ),
+                                ),
+                              );
                             }
                           },
                           color: const Color(0xff111111),
@@ -175,7 +164,10 @@ class _LoginViewState extends State<LoginView> {
                 Row(
                   children: [
                     Expanded(
-                      child: Divider(color: const Color(0xffE5E5E5), thickness: 1.sp),
+                      child: Divider(
+                        color: const Color(0xffE5E5E5),
+                        thickness: 1.sp,
+                      ),
                     ),
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 12.w),
@@ -189,7 +181,10 @@ class _LoginViewState extends State<LoginView> {
                       ),
                     ),
                     Expanded(
-                      child: Divider(color: const Color(0xffE5E5E5), thickness: 1.sp),
+                      child: Divider(
+                        color: const Color(0xffE5E5E5),
+                        thickness: 1.sp,
+                      ),
                     ),
                   ],
                 ),

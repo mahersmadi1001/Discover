@@ -1,3 +1,5 @@
+import 'package:Discover/models/user_info_model.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -25,7 +27,9 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
+  Hive.registerAdapter(UserInfoModelAdapter());
 
+  // await Hive.openBox<UserModel>('users_box')
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   Hive.registerAdapter<ProductModel>(ProductModelAdapter());
   await setup();
@@ -40,6 +44,10 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  static FirebaseAnalytics analytics = FirebaseAnalytics.instance;
+  static FirebaseAnalyticsObserver observer = FirebaseAnalyticsObserver(
+    analytics: analytics,
+  );
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -94,6 +102,7 @@ class _MyAppState extends State<MyApp> {
             },
             builder: (context, state) {
               return MaterialApp(
+                navigatorObservers: [observer],
                 theme: ThemeData(
                   colorScheme: const ColorScheme.light(
                     primary: Colors.black,
@@ -104,7 +113,6 @@ class _MyAppState extends State<MyApp> {
                     onSecondary: Colors.white,
                   ),
                 ),
-
                 navigatorKey: navigatorKey,
                 debugShowCheckedModeBanner: false,
 
