@@ -1,4 +1,3 @@
-import 'package:Discover/models/user_info_model.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -13,12 +12,13 @@ import 'package:Discover/blocs/product_bloc/product_bloc.dart';
 import 'package:Discover/core/user_session/user_session_bloc.dart';
 import 'package:Discover/firebase_options.dart';
 import 'package:Discover/models/product_model.dart';
+import 'package:Discover/models/user_info_model.dart';
 import 'package:Discover/services/authservice.dart';
 import 'package:Discover/services/cart_local_data_source.dart';
 import 'package:Discover/services/di.dart';
 import 'package:Discover/services/product_service.dart';
 import 'package:Discover/services/user_session_service.dart';
-import 'package:Discover/view/LoginView.dart';
+import 'package:Discover/view/Login/LoginView.dart';
 import 'package:Discover/view/nav_bar_view.dart';
 import 'package:Discover/view/onboarding_view.dart' show OnboardingView;
 import 'package:Discover/view/splash_view.dart';
@@ -27,11 +27,11 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
-  Hive.registerAdapter(UserInfoModelAdapter());
 
-  // await Hive.openBox<UserModel>('users_box')
+
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   Hive.registerAdapter<ProductModel>(ProductModelAdapter());
+  Hive.registerAdapter<UserInfoModel>(UserInfoModelAdapter());
   await setup();
   runApp(const MyApp());
 }
@@ -60,8 +60,7 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(create: (context) => AuthBloc(getIt.get<AuthService>())),
         BlocProvider(
           create: (context) =>
-              CartBloc(cartLocalDataSource: CartLocalDataSource())
-                ..add(InitiliazeCart()),
+              CartBloc(cartLocalDataSource: CartLocalDataSource()),
         ),
         BlocProvider(
           create: (context) => LocalSearchProductBloc()..add((GetAllData())),

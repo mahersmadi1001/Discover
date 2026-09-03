@@ -2,6 +2,7 @@ import 'package:Discover/blocs/cart_bloc/cart_bloc.dart';
 import 'package:Discover/models/cart_item_model.dart';
 import 'package:Discover/models/product_model.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -58,8 +59,10 @@ class BottomActionPanel extends StatelessWidget {
 
           ElevatedButton.icon(
             onPressed: () async {
+              final auth = FirebaseAuth.instance;
               context.read<CartBloc>().add(
                 AddToCart(
+                  userId: auth.currentUser?.uid ?? '',
                   cartItemModel: CartItemModel(product: product, quantity: 1),
                 ),
               );

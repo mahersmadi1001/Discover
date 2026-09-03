@@ -12,16 +12,10 @@ class UserSessionBloc extends Bloc<UserSessionEvent, UserSessionState> {
   AuthService authService = AuthService();
   final FirebaseAuth _fireBaseAuth = FirebaseAuth.instance;
   StreamSubscription<User?>? _authSubscription;
-  // bool _isProcessingSignOut = false;
+
 
   UserSessionBloc(this.userSessionService) : super(UserSessionInitial()) {
-    // _authSubscription = _fireBaseAuth.authStateChanges().listen((User? user) {
-    //   if (user == null && !_isProcessingSignOut) {
-    //     add(Signout());
-    //   } else if (user != null) {
-    //     add(LogingUser());
-    //   } 
-    // });
+   
 
     on<UserSessionCheckStatus>((event, emit) async {
       await Future.delayed(Duration(seconds: 3));
@@ -46,11 +40,11 @@ class UserSessionBloc extends Bloc<UserSessionEvent, UserSessionState> {
     });
 
     on<Signout>((event, emit) async {
-      // _isProcessingSignOut = true;
+   
 
       await authService.signout();
       emit(UserUnAuth());
-      // _isProcessingSignOut = false;
+
     });
   }
 

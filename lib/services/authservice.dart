@@ -3,7 +3,9 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:Discover/models/Loginmodel.dart';
 import 'package:Discover/models/signup_model.dart';
+import 'package:Discover/models/user_info_model.dart';
 import 'package:Discover/services/di.dart';
+import 'package:Discover/services/profile_service.dart';
 import 'package:Discover/services/user_session_service.dart';
 
 class AuthService {
@@ -12,6 +14,8 @@ class AuthService {
   final UserSessionService userSessionService = UserSessionService(
     sharedPreferences: getIt.get<SharedPreferences>(),
   );
+  final ProfileService profileService = ProfileService();
+
   Future<bool> login({required LoginModel loginModel}) async {
     try {
       final UserCredential userCredential = await _fireBaseAuth
@@ -22,6 +26,27 @@ class AuthService {
 
       final user = _fireBaseAuth.currentUser;
       if (user != null) {
+        // Save or update user info
+        final existingUserInfo = await profileService.getUserInfo(
+          userId: user.uid,
+        );
+        if (existingUserInfo == null) {
+          await profileService.saveUserInfo(
+            userId: user.uid,
+            userInfo: UserInfoModel(
+              id: user.uid,
+              name: user.displayName ?? '',
+              email: user.email ?? '',
+              createdAt: DateTime.now(),
+              lastLogin: DateTime.now(),
+            ),
+          );
+        } else {
+          await profileService.updateUserInfo(
+            userId: user.uid,
+            updates: {'lastLogin': DateTime.now()},
+          );
+        }
         return true;
       } else {
         return false;
@@ -45,6 +70,17 @@ class AuthService {
         } catch (nameError) {
           print('Warning: Failed to update display name: $nameError');
         }
+
+        await profileService.saveUserInfo(
+          userId: userCredential.user!.uid,
+          userInfo: UserInfoModel(
+            id: userCredential.user!.uid,
+            name: signupModel.username,
+            email: signupModel.email,
+            createdAt: DateTime.now(),
+            lastLogin: DateTime.now(),
+          ),
+        );
 
         return true;
       }
@@ -83,10 +119,35 @@ class AuthService {
 
       final user = _fireBaseAuth.currentUser;
       if (user != null) {
+        // Save or update user info
+        final existingUserInfo = await profileService.getUserInfo(
+          userId: user.uid,
+        );
+        if (existingUserInfo == null) {
+          await profileService.saveUserInfo(
+            userId: user.uid,
+            userInfo: UserInfoModel(
+              id: user.uid,
+              name: user.displayName ?? '',
+              email: user.email ?? '',
+              profileImageUrl: user.photoURL,
+              createdAt: DateTime.now(),
+              lastLogin: DateTime.now(),
+            ),
+          );
+        } else {
+          await profileService.updateUserInfo(
+            userId: user.uid,
+            updates: {
+              'lastLogin': DateTime.now(),
+              'profileImageUrl': user.photoURL,
+            },
+          );
+        }
         print('Google sign-in : true');
         return true;
       } else {
-        print('Google sign-in : true');
+        print('Google sign-in : false');
         return false;
       }
     } catch (e) {
@@ -102,8 +163,9 @@ class AuthService {
 
   Future<void> signout() async {
     try {
-      await _googleSignIn.signOut();
       await _fireBaseAuth.signOut();
+      await _googleSignIn.signOut();
+      await _googleSignIn.disconnect();
     } catch (e) {
       print('Signout error: $e');
     }

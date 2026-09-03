@@ -7,37 +7,67 @@ part 'favorite_event.dart';
 part 'favorite_state.dart';
 
 class FavoriteBloc extends Bloc<FavoriteEvent, FavoriteState> {
+  Box<ProductModel>? _box;
+  String? _currentUserId;
+
   FavoriteBloc() : super(FavoriteInitial()) {
     on<FavoriteEvent>((event, emit) async {
       switch (event) {
         case InitializeFavoriteList():
           {
-            final box = await Hive.openBox<ProductModel>('favorite_key');
-            List<ProductModel> products = box.values.toList();
+            if (_currentUserId != event.userId ||
+                _box == null ||
+                !_box!.isOpen) {
+              _currentUserId = event.userId;
+              _box = await Hive.openBox<ProductModel>(
+                'favorites_${event.userId}',
+              );
+            }
+            List<ProductModel> products = _box!.values.toList();
             for (var product in products) {
               print(product.id);
             }
             emit(FavoriteLoaded(products: products));
           }
         case ToggleFavorite():
-          final box = await Hive.openBox<ProductModel>('favorite_key');
-          List<ProductModel> products = box.values.toList();
+          if (_currentUserId != event.userId || _box == null || !_box!.isOpen) {
+            _currentUserId = event.userId;
+            _box = await Hive.openBox<ProductModel>(
+              'favorites_${event.userId}',
+            );
+          }
+          List<ProductModel> products = _box!.values.toList();
           print(products);
-          ProductModel? exsitingProduct;
+          ProductModel? existingProduct;
           for (var product in products) {
-            print("product exsit: ${product.id}");
+            print("product exist: ${product.id}");
             if (product.id == event.product.id) {
-              exsitingProduct = product;
+              existingProduct = product;
               break;
             }
           }
-          if (exsitingProduct != null) {
-            await exsitingProduct.delete();
+          if (existingProduct != null) {
+            await existingProduct.delete();
           } else {
-            await box.add(event.product);
+            await _box!.add(event.product);
           }
-          emit(FavoriteLoaded(products: box.values.toList()));
+          emit(FavoriteLoaded(products: _box!.values.toList()));
+        case ClearFavorites():
+          if (_currentUserId != event.userId || _box == null || !_box!.isOpen) {
+            _currentUserId = event.userId;
+            _box = await Hive.openBox<ProductModel>(
+              'favorites_${event.userId}',
+            );
+          }
+          await _box!.clear();
+          emit(FavoriteLoaded(products: []));
       }
     });
+  }
+
+  @override
+  Future<void> close() {
+    _box?.close();
+    return super.close();
   }
 }

@@ -1,11 +1,30 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:Discover/blocs/favorite_bloc/favorite_bloc.dart';
 import 'package:Discover/core/Widgets/product_ui.dart';
 
-class FavoretItemsView extends StatelessWidget {
+class FavoretItemsView extends StatefulWidget {
   const FavoretItemsView({super.key});
+
+  @override
+  State<FavoretItemsView> createState() => _FavoretItemsViewState();
+}
+
+class _FavoretItemsViewState extends State<FavoretItemsView> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  @override
+  void initState() {
+    super.initState();
+    final user = _auth.currentUser;
+    if (user != null) {
+      context.read<FavoriteBloc>().add(
+        InitializeFavoriteList(userId: user.uid),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,25 +45,37 @@ class FavoretItemsView extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: () {},
-            icon: const Icon(Icons.notifications_none_outlined, color: Colors.black),
+            icon: const Icon(
+              Icons.notifications_none_outlined,
+              color: Colors.black,
+            ),
           ),
         ],
       ),
       body: BlocBuilder<FavoriteBloc, FavoriteState>(
         builder: (context, state) {
           if (state is FavoriteInitial) {
-            return const Center(child: CircularProgressIndicator(color: Colors.black));
+            return const Center(
+              child: CircularProgressIndicator(color: Colors.black),
+            );
           } else if (state is FavoriteLoaded) {
             if (state.products.isEmpty) {
               return Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(Icons.favorite_border_rounded, size: 70.sp, color: Colors.grey[300]),
+                    Icon(
+                      Icons.favorite_border_rounded,
+                      size: 70.sp,
+                      color: Colors.grey[300],
+                    ),
                     SizedBox(height: 16.h),
                     Text(
                       'No Saved Items!',
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.sp),
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18.sp,
+                      ),
                     ),
                     SizedBox(height: 8.h),
                     Text(

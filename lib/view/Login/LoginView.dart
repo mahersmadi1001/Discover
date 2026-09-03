@@ -1,3 +1,6 @@
+import 'package:Discover/view/Login/widgets/divider_login.dart';
+import 'package:Discover/view/Login/widgets/login_button.dart';
+import 'package:Discover/view/signup/widgets/nav_to_login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -5,8 +8,6 @@ import 'package:Discover/blocs/Loginbloc/auth_bloc/auth_bloc.dart';
 import 'package:Discover/core/Widgets/Loginwith.dart';
 import 'package:Discover/core/Widgets/tfflogin.dart';
 import 'package:Discover/core/user_session/user_session_bloc.dart';
-import 'package:Discover/models/Loginmodel.dart';
-import 'package:Discover/view/signup/signup_view.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -115,79 +116,16 @@ class _LoginViewState extends State<LoginView> {
                         child: CircularProgressIndicator(color: Colors.black),
                       );
                     } else {
-                      return Container(
-                        height: 54.h,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(14.r),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.12),
-                              blurRadius: 15,
-                              offset: const Offset(0, 6),
-                            ),
-                          ],
-                        ),
-                        child: MaterialButton(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(14.r),
-                          ),
-                          minWidth: double.infinity,
-                          onPressed: () {
-                            if (loginkey.currentState!.validate()) {
-                              context.read<AuthBloc>().add(
-                                LoginEvent(
-                                  loginModel: LoginModel(
-                                    email: email.text,
-                                    password: password.text,
-                                  ),
-                                ),
-                              );
-                            }
-                          },
-                          color: const Color(0xff111111),
-                          elevation: 0,
-                          highlightElevation: 0,
-                          child: Text(
-                            "Login",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16.sp,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ),
+                      return LoginButton(
+                        loginkey: loginkey,
+                        email: email,
+                        password: password,
                       );
                     }
                   },
                 ),
                 SizedBox(height: 32.h),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Divider(
-                        color: const Color(0xffE5E5E5),
-                        thickness: 1.sp,
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 12.w),
-                      child: Text(
-                        "or continue with",
-                        style: TextStyle(
-                          color: const Color(0xff9E9E9E),
-                          fontSize: 13.sp,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: Divider(
-                        color: const Color(0xffE5E5E5),
-                        thickness: 1.sp,
-                      ),
-                    ),
-                  ],
-                ),
+                DividerLogin(),
                 SizedBox(height: 24.h),
                 Loginwith(
                   text: "Continue with Google",
@@ -198,36 +136,7 @@ class _LoginViewState extends State<LoginView> {
                   },
                 ),
                 SizedBox(height: 48.h),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Don't have an account? ",
-                      style: TextStyle(
-                        color: const Color(0xff757575),
-                        fontSize: 15.sp,
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const SignupView(),
-                          ),
-                        );
-                      },
-                      child: Text(
-                        "Sign Up",
-                        style: TextStyle(
-                          fontSize: 15.sp,
-                          fontWeight: FontWeight.w700,
-                          color: const Color(0xff111111),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                NavToLogin(),
                 SizedBox(height: 24.h),
               ],
             ),

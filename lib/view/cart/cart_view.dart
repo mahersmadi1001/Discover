@@ -1,6 +1,7 @@
 import 'package:Discover/view/cart/widgets/cart_Item_card.dart';
 import 'package:Discover/view/cart/widgets/cart_empty_state.dart';
 import 'package:Discover/view/cart/widgets/checkout_section.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -14,6 +15,17 @@ class CartView extends StatefulWidget {
 }
 
 class _CartViewState extends State<CartView> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  @override
+  void initState() {
+    super.initState();
+    final user = _auth.currentUser;
+    if (user != null) {
+      context.read<CartBloc>().add(InitiliazeCart(userId: user.uid));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,10 +88,16 @@ class _CartViewState extends State<CartView> {
                         child: CartItemCard(
                           item: item,
                           onAdd: () => context.read<CartBloc>().add(
-                            AddToCart(cartItemModel: item),
+                            AddToCart(
+                              userId: _auth.currentUser?.uid ?? '',
+                              cartItemModel: item,
+                            ),
                           ),
                           onRemove: () => context.read<CartBloc>().add(
-                            RemoveFromCart(cartItemModel: item),
+                            RemoveFromCart(
+                              userId: _auth.currentUser?.uid ?? '',
+                              cartItemModel: item,
+                            ),
                           ),
                         ),
                       );

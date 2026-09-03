@@ -6,7 +6,7 @@ import 'package:Discover/blocs/favorite_bloc/favorite_bloc.dart';
 import 'package:Discover/blocs/product_bloc/product_bloc.dart';
 import 'package:Discover/services/product_service.dart';
 import 'package:Discover/view/Favoret_item_view.dart';
-import 'package:Discover/view/account_view.dart';
+import 'package:Discover/view/account/account_view.dart';
 import 'package:Discover/view/cart/cart_view.dart';
 import 'package:Discover/view/home_view.dart';
 
@@ -34,9 +34,7 @@ class _NavBarViewState extends State<NavBarView> {
               ProductBloc(productService: ProductService())
                 ..add(GetAllProducts()),
         ),
-        BlocProvider(
-          create: (context) => FavoriteBloc()..add(InitializeFavoriteList()),
-        ),
+        BlocProvider(create: (context) => FavoriteBloc()),
       ],
 
       child: Scaffold(

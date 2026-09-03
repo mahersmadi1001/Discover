@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -82,7 +83,13 @@ class Product_Ui extends StatelessWidget {
                         }
                         return GestureDetector(
                           onTap: () {
-                            context.read<FavoriteBloc>().add(ToggleFavorite(product: product));
+                            final auth = FirebaseAuth.instance;
+                            context.read<FavoriteBloc>().add(
+                              ToggleFavorite(
+                                userId: auth.currentUser?.uid ?? '',
+                                product: product,
+                              ),
+                            );
                           },
                           child: Container(
                             padding: EdgeInsets.all(6.w),
@@ -91,7 +98,9 @@ class Product_Ui extends StatelessWidget {
                               shape: BoxShape.circle,
                             ),
                             child: Icon(
-                              isFav ? Icons.favorite : Icons.favorite_border_rounded,
+                              isFav
+                                  ? Icons.favorite
+                                  : Icons.favorite_border_rounded,
                               color: isFav ? Colors.red : Colors.black,
                               size: 18.sp,
                             ),

@@ -1,17 +1,13 @@
 import 'package:Discover/blocs/cart_bloc/cart_bloc.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive/hive.dart';
 
 class CheckoutSection extends StatelessWidget {
-
   final String totalPrice;
-  const CheckoutSection({
-    super.key,
-  
-    required this.totalPrice,
-  });
+  const CheckoutSection({super.key, required this.totalPrice});
 
   @override
   Widget build(BuildContext context) {
@@ -75,9 +71,13 @@ class CheckoutSection extends StatelessWidget {
                     ),
                     TextButton(
                       onPressed: () async {
-                        await Hive.deleteBoxFromDisk("shopping_cart");
+                        final auth = FirebaseAuth.instance;
+                        final userId = auth.currentUser?.uid ?? '';
+                        await Hive.deleteBoxFromDisk("cart_$userId");
                         if (context.mounted) {
-                          context.read<CartBloc>().add(InitiliazeCart());
+                          context.read<CartBloc>().add(
+                            InitiliazeCart(userId: userId),
+                          );
                           Navigator.pop(context);
                         }
                       },

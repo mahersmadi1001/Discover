@@ -20,19 +20,40 @@ class UserInfoModelAdapter extends TypeAdapter<UserInfoModel> {
       id: fields[0] as String,
       name: fields[1] as String?,
       email: fields[2] as String,
+      createdAt: fields[3] as DateTime?,
+      lastLogin: fields[4] as DateTime?,
+      phoneNumber: fields[5] as String?,
+      address: fields[6] as String?,
+      profileImageUrl: fields[7] as String?,
+      cartCount: fields[8] as int,
+      favoritesCount: fields[9] as int,
     );
   }
 
   @override
   void write(BinaryWriter writer, UserInfoModel obj) {
     writer
-      ..writeByte(3)
+      ..writeByte(10)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
       ..write(obj.name)
       ..writeByte(2)
-      ..write(obj.email);
+      ..write(obj.email)
+      ..writeByte(3)
+      ..write(obj.createdAt)
+      ..writeByte(4)
+      ..write(obj.lastLogin)
+      ..writeByte(5)
+      ..write(obj.phoneNumber)
+      ..writeByte(6)
+      ..write(obj.address)
+      ..writeByte(7)
+      ..write(obj.profileImageUrl)
+      ..writeByte(8)
+      ..write(obj.cartCount)
+      ..writeByte(9)
+      ..write(obj.favoritesCount);
   }
 
   @override

@@ -6,7 +6,7 @@ import 'package:Discover/blocs/local_search_product_bloc/local_search_product_bl
 import 'package:Discover/blocs/product_bloc/product_bloc.dart';
 import 'package:Discover/core/Widgets/category_chip_widget.dart';
 import 'package:Discover/core/Widgets/product_ui.dart';
-import 'package:Discover/view/search_view.dart';
+import 'package:Discover/view/search/search_view.dart';
 
 final TextEditingController tff_controller = TextEditingController();
 

@@ -15,7 +15,9 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       switch (event) {
         case InitiliazeCart():
           {
-            cartItems = await cartLocalDataSource.getProductsToShowInCart();
+            cartItems = await cartLocalDataSource.getProductsToShowInCart(
+              userId: event.userId,
+            );
             if (cartItems.isEmpty) {
               emit(CartEmpty());
             } else {
@@ -37,7 +39,10 @@ class CartBloc extends Bloc<CartEvent, CartState> {
             } else {
               cartItems.add(event.cartItemModel);
             }
-            cartLocalDataSource.saveProducts(cartItems: cartItems);
+            cartLocalDataSource.saveProducts(
+              userId: event.userId,
+              cartItems: cartItems,
+            );
             double total = 0;
             for (var item in cartItems) {
               total = total + (item.product.price * item.quantity);
@@ -55,7 +60,10 @@ class CartBloc extends Bloc<CartEvent, CartState> {
               } else {
                 cartItems.removeAt(index);
               }
-              cartLocalDataSource.saveProducts(cartItems: cartItems);
+              cartLocalDataSource.saveProducts(
+                userId: event.userId,
+                cartItems: cartItems,
+              );
               double total = 0;
               for (var item in cartItems) {
                 total = total + (item.product.price * item.quantity);
