@@ -28,7 +28,6 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
 
-
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   Hive.registerAdapter<ProductModel>(ProductModelAdapter());
   Hive.registerAdapter<UserInfoModel>(UserInfoModelAdapter());

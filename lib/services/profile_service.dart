@@ -97,12 +97,12 @@ class ProfileService {
 
   Future<void> clearUserCartAndFavorites({required String userId}) async {
     try {
-      // Clear cart
+
       final cartBox = await Hive.openBox('cart_$userId');
       await cartBox.clear();
       print('Cart cleared for userId: $userId');
 
-      // Clear favorites
+
       final favoritesBox = await Hive.openBox('favorites_$userId');
       await favoritesBox.clear();
       print('Favorites cleared for userId: $userId');

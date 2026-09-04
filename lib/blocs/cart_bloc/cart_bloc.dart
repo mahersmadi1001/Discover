@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:Discover/models/cart_item_model.dart' show CartItemModel;

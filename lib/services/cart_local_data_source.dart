@@ -77,19 +77,19 @@ class CartLocalDataSource {
         userId: userId,
       );
 
-      // Check if product already exists
+     
       int existingIndex = currentCart.indexWhere(
         (item) => item.product.id == cartItem.product.id,
       );
 
       if (existingIndex != -1) {
-        // Update quantity if exists
+  
         currentCart[existingIndex] = CartItemModel(
           product: currentCart[existingIndex].product,
           quantity: currentCart[existingIndex].quantity + cartItem.quantity,
         );
       } else {
-        // Add new item
+   
         currentCart.add(cartItem);
       }
 
