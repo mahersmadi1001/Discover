@@ -1,5 +1,6 @@
 import 'package:Discover/view/Login/widgets/divider_login.dart';
 import 'package:Discover/view/Login/widgets/login_button.dart';
+import 'package:Discover/view/Login/widgets/nav_to_login.dart';
 import 'package:Discover/view/signup/widgets/nav_to_login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -136,7 +137,7 @@ class _LoginViewState extends State<LoginView> {
                   },
                 ),
                 SizedBox(height: 48.h),
-                NavToLogin(),
+                NavToSignup(),
                 SizedBox(height: 24.h),
               ],
             ),

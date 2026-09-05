@@ -1,12 +1,9 @@
-
 import 'package:Discover/view/signup/signup_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class NavToLogin extends StatelessWidget {
-  const NavToLogin({
-    super.key,
-  });
+class NavToSignup extends StatelessWidget {
+  const NavToSignup({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,18 +12,13 @@ class NavToLogin extends StatelessWidget {
       children: [
         Text(
           "Don't have an account? ",
-          style: TextStyle(
-            color: const Color(0xff757575),
-            fontSize: 15.sp,
-          ),
+          style: TextStyle(color: const Color(0xff757575), fontSize: 15.sp),
         ),
         GestureDetector(
           onTap: () {
             Navigator.push(
               context,
-              MaterialPageRoute(
-                builder: (context) => const SignupView(),
-              ),
+              MaterialPageRoute(builder: (context) => const SignupView()),
             );
           },
           child: Text(
