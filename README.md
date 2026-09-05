@@ -5,7 +5,7 @@
 Discover is a modern, feature-rich e-commerce mobile application built with Flutter. It provides a seamless shopping experience with user authentication, product browsing, cart management, favorites, and more. The app leverages Firebase for authentication and analytics, Hive for local data persistence, and follows MVVM Architecture with BLoC state management.
 
 ## 📸 Screenshots
-[Home page](screenshots/home.jpg)              [login page](screenshots/login.jpg)            [login page](screenshots/login.jpg)
+[Home page](screenshots/home.jpg)              [login page](screenshots/login.jpg)            [signup page](screenshots/signup.jpg)
 
 [favorite page](screenshots/favorite.jpg)              [cart page](screenshots/cart.jpg)            [account page](screenshots/account.jpg)
 ## 🛠 Tech Stack & Architecture
